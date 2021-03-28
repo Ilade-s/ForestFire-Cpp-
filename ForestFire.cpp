@@ -17,7 +17,7 @@ vector<vector<int>> GenGrid(int rows, int cols, float TreeRate) // Génération 
     // Création grille en ligne
     for (int i = 0; i < rows*cols*(1-TreeRate)-1; ++i) GridLine.push_back(0); // Cases vides
     for (int i = 0; i < rows*cols*TreeRate; ++i) GridLine.push_back(1); // Cases de forêt
-    GridLine.push_back(2); // Case en feu initiale
+    GridLine[0] = 2; // Case en feu initiale
 
     // Mélange de la grille en ligne
     shuffle(begin(GridLine), end(GridLine), default_random_engine());
