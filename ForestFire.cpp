@@ -8,22 +8,15 @@
 
 using namespace std;
 
-vector<vector<int>> GenGrid() // Génération de la grille
+vector<int> GenGrid() // Génération de la grille
 {
     vector<int> voidPart {1, 2, 3};
 
     shuffle(begin(voidPart), end(voidPart), default_random_engine());
 
-    // affichage liste
-        cout << "liste initiale : ";
-        for (vector<int>::iterator it = voidPart.begin(); it != voidPart.end(); it++)
-            cout << *it << ' ';
-
-    cout << "\n";
-
     vector<vector<int>> Grid;
 
-    return Grid;
+    return voidPart;
 }
 
 int main()
@@ -31,7 +24,14 @@ int main()
     cout << "Bienvenue dans ma simulation de feu de foret !\n";
 
     // initialisation variables
-    vector<vector<int>> Grid = GenGrid();
+    vector<int> Grid = GenGrid();
+
+    // affichage liste
+        cout << "liste initiale : ";
+        for (vector<int>::iterator it = Grid.begin(); it != Grid.end(); it++)
+            cout << *it << ' ';
+
+    cout << "\n";
 
     return 0;
 }
