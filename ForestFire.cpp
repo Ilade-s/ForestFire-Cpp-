@@ -204,7 +204,7 @@ int main()
        Grid = PropFire(Grid, cols, rows); // passe de propagation
        // mise à jour des variables
        Ntrees = TypeSearch(Grid, cols, rows);
-       Nfeux = TypeSearch(Grid, cols, rows, 2);
+       Nfeux = TypeSearch(Grid, cols, rows, 2) + TypeSearch(Grid, cols, rows, 3);
        RemainingTreeShare = Ntrees / NInitialTrees * 100;
        // affichage résultat de la passe (si demandé)
        if (aff == "O")
