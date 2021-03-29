@@ -24,13 +24,12 @@ void print(vector<vector<int>> Grid, const int cols, const int rows)
 bool Proba(float ProbaFire = 0.80)
 {
     vector<int> samplelist;
-    int n = ProbaFire*100;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < ProbaFire; i++)
     {
         samplelist.push_back(1);
     }
-    for (int i = 0; i < 100-n; i++)
+    for (int i = 0; i < 100-ProbaFire; i++)
     {
         samplelist.push_back(0);
     }
@@ -51,15 +50,15 @@ bool Proba(float ProbaFire = 0.80)
     
 }
 
-vector<vector<int>> GenGrid(const int rows, const int cols, float TreeRate) // Génération de la grille
+vector<vector<int>> GenGrid(const int rows, const int cols, int TreeRate) // Génération de la grille
 {
     // Initialisation variables
     vector<int> GridLine;
     vector<vector<int>> Grid;
 
     // Création grille en ligne
-    for (int i = 0; i < rows*cols*(1-TreeRate); ++i) GridLine.push_back(0); // Cases vides
-    for (int i = 0; i < rows*cols*TreeRate; ++i) GridLine.push_back(1); // Cases de forêt
+    for (int i = 0; i < rows*cols*TreeRate/100; ++i) GridLine.push_back(1); // Cases vides
+    for (int i = 0; i < rows*cols*(100-TreeRate)/100; ++i) GridLine.push_back(0); // Cases de forêt
     GridLine[0] = 2; // Case en feu initiale
 
     // Mélange de la grille en ligne
@@ -177,11 +176,11 @@ int main()
 {
     cout << "Bienvenue dans ma simulation de feu de foret !\n";
     // initialisation variables
-    const int rows = 50;
-    const int cols = 50;
-    float ProbaFire = 0.80; // probabilité de prise de feu
-    float TreeRate = 0.80; // part d'arbres initiale dans les cases
-    vector<vector<int>> Grid = GenGrid(rows, cols, TreeRate); // création grille
+    const int rows = 50; // nombre de lignes
+    const int cols = 50; // nombre de colonnes
+    int ProbaFire = 80; // probabilité de prise de feu
+    int TreeRate = 80; // part d'arbres initiale dans les cases
+    vector<vector<int>> Grid = GenGrid(rows, cols, TreeRate); // grille de simulation
     int Ntrees = rows*cols*TreeRate; // nombre d'arbres
     int NInitialTrees = rows*cols*TreeRate; // nombre d'arbres initiaux
     int Nfeux = TypeSearch(Grid, cols, rows, 2); // nombre d'arbres en feu
