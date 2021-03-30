@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include <random>
+#include <windows.h>
 
 using namespace std;
 
@@ -172,6 +173,7 @@ int main()
     int NInitialTrees = rows*cols*TreeRate; // nombre d'arbres initiaux
     int Nfeux = TypeSearch(Grid, cols, rows, 2); // nombre d'arbres en feu
     float RemainingTreeShare = 100.0;
+    int TimePause = 1000; // temps de pause entre chaque passe
     string aff = "O";
     // input pour demande d'affichage
     cout << "Souhaitez-vous un affichage de la grille ? ('O' ou 'N') ";
@@ -179,7 +181,12 @@ int main()
     
     if (aff == "O") 
     {
-        print(Grid, cols, rows); // affichage grille
+        // input temps de pause
+        cout << "Combien de temps de pause entre chaque passe (en dixiemes de secondes) ? ";
+        cin >> TimePause;
+        TimePause *= 100;
+        // affichage grille
+        print(Grid, cols, rows); 
     }
 
     cout << "\n" << "Arbres initiaux : " << NInitialTrees;
@@ -199,6 +206,7 @@ int main()
             cout << "\n" << "Arbres restants : " << Ntrees << "\n";
             cout << "Proportion d'arbres restants (en %) : " << RemainingTreeShare << "\n\n"; 
        }
+       Sleep(TimePause); // pause
     }
     // fin du programme
     if (aff == "N"){
