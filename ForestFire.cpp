@@ -21,33 +21,18 @@ void print(vector<vector<int>> Grid, const int cols, const int rows)
     }
 }
 
-bool Proba(float ProbaFire = 0.80)
+bool Proba(int ProbaFire = 80)
 {
-    vector<int> samplelist;
+    int n = rand() % 100 + 1;
 
-    for (int i = 0; i < ProbaFire; i++)
+    if (n < ProbaFire)
     {
-        samplelist.push_back(1);
+        return true;
     }
-    for (int i = 0; i < 100-ProbaFire; i++)
+    else
     {
-        samplelist.push_back(0);
-    }
-    // test index aléatoire
-    switch (samplelist[rand() % 100])
-    {
-    case 0:
         return false;
-        break;
-    
-    case 1:
-        return true;
-        break;
-    
-    default:
-        return true;
     }
-    
 }
 
 vector<vector<int>> GenGrid(const int rows, const int cols, int TreeRate) // Génération de la grille
@@ -82,8 +67,10 @@ vector<vector<int>> GenGrid(const int rows, const int cols, int TreeRate) // Gé
 auto PropFire(vector<vector<int>> Grid, const int cols, const int rows) // exécute une passe de propagation de feu
 {
     // boucle sur la totalité de la grille
-    for (int i = 0; i < rows; i++){
-        for (int j = 0; j < cols; j++){
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
             if ((Grid[i][j] == 2) || (Grid[i][j] == 3)) // si arbre en feu
             {
                 // exceptions sur les lignes extrêmes
