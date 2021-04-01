@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void print(vector<vector<int>> Grid, const int cols, const int rows)
+void print(vector<vector<int>> Grid, int cols, int rows)
 {
     // Affichage grille
     for (int i = 0; i < rows; i++)
@@ -36,16 +36,16 @@ bool Proba(int ProbaFire = 80)
     }
 }
 
-vector<vector<int>> GenGrid(const int rows, const int cols, int TreeRate) // Génération de la grille
+vector<vector<int>> GenGrid(int rows, int cols, int TreeRate) // Génération de la grille
 {
     // Initialisation variables
     vector<int> GridLine;
     vector<vector<int>> Grid;
 
     // Création grille en ligne
-    for (int i = 0; i < rows*cols*TreeRate/100; ++i) GridLine.push_back(1); // Cases vides
+    for (int i = 0; i < rows*cols*TreeRate/100-1; ++i) GridLine.push_back(1); // Cases vides
     for (int i = 0; i < rows*cols*(100-TreeRate)/100; ++i) GridLine.push_back(0); // Cases de forêt
-    GridLine[0] = 2; // Case en feu initiale
+    GridLine.push_back(2); // Case en feu initiale
 
     // Mélange de la grille en ligne
     shuffle(begin(GridLine), end(GridLine), default_random_engine());
@@ -65,7 +65,7 @@ vector<vector<int>> GenGrid(const int rows, const int cols, int TreeRate) // Gé
     return Grid;
 }
 
-auto PropFire(vector<vector<int>> Grid, const int cols, const int rows) // exécute une passe de propagation de feu
+auto PropFire(vector<vector<int>> Grid, int cols, int rows) // exécute une passe de propagation de feu
 {
     // boucle sur la totalité de la grille
     for (int i = 0; i < rows; i++)
@@ -142,7 +142,7 @@ auto PropFire(vector<vector<int>> Grid, const int cols, const int rows) // exéc
     return Grid;
 }
 
-int TypeSearch(vector<vector<int>> Grid, const int cols, const int rows, int type = 1) // fonction pour compter les arbres restants
+int TypeSearch(vector<vector<int>> Grid, int cols, int rows, int type = 1) // fonction pour compter les arbres restants
 {
     int Ntrees = 0;
 
@@ -164,10 +164,21 @@ int main()
 {
     cout << "Bienvenue dans ma simulation de feu de foret !\n";
     // initialisation variables
-    const int rows = 50; // nombre de lignes
-    const int cols = 50; // nombre de colonnes
+    int rows = 50; // nombre de lignes
+    int cols = 50; // nombre de colonnes
     int ProbaFire = 80; // probabilité de prise de feu
     int TreeRate = 80; // part d'arbres initiale dans les cases
+
+    // inputs pour génération de la grille (optionnels)
+    cout << "Infos pour generation de la grille :" << "\n" << "\tNombre de lignes : ";
+    cin >> rows;
+    cout << "\n" << "\tNombre de colonnes : ";
+    cin >> cols;
+    cout << "\n" << "\tPart d'arbres (en %) : ";
+    cin >> TreeRate;
+    cout << "\n" << "\tProbabilite de feu (en %) : ";
+    cin >> ProbaFire;
+
     vector<vector<int>> Grid = GenGrid(rows, cols, TreeRate); // grille de simulation
     int Ntrees = rows*cols*TreeRate; // nombre d'arbres
     int NInitialTrees = rows*cols*TreeRate; // nombre d'arbres initiaux
@@ -176,13 +187,13 @@ int main()
     int TimePause = 1000; // temps de pause entre chaque passe
     string aff = "O";
     // input pour demande d'affichage
-    cout << "Souhaitez-vous un affichage de la grille ? ('O' ou 'N') ";
+    cout << "\n" << "\tSouhaitez-vous un affichage de la grille ? ('O' ou 'N') ";
     cin >> aff;
     
     if (aff == "O") 
     {
         // input temps de pause
-        cout << "Combien de temps de pause entre chaque passe (en dixiemes de secondes) ? ";
+        cout << "\n" << "\tCombien de temps de pause entre chaque passe (en dixiemes de secondes) ? ";
         cin >> TimePause;
         TimePause *= 100;
         // affichage grille
